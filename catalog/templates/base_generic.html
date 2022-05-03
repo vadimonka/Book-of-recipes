@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Поваренная книга</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/styles.css' %}">
+    <link  rel="stylesheet" href="{% static '/bootstrap-5.0.2-dist/css/bootstrap.min.css' %}">
+    {# шрифты cdn #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
+
+    <script type="text/javascript" src="{% static '/events.js' %}"></script>
+    <script type="text/javascript" src="{% static '/bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js' %}"></script>
+    {# иконки cdn #}
+    <script src="https://kit.fontawesome.com/a78c3f4942.js" crossorigin="anonymous"></script>
+</head>
+
+<body style="font-family: 'Ubuntu Condensed', sans-serif; font-size: 14pt; background:#edeef0;">
+
+<div class="container" style="background: #FFF;">
+    <!-- шапка -->
+    <div class="row shadow-sm" style="height:150px; padding: 20px; background: #F9F9FF;">
+        <div class="col gx-2 mt-0 py-2 rounded">
+            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNav" aria-labelledby="offcanvasNavLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavLabel"></h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+                </div>
+                <div class="offcanvas-body">
+                    {% block sidebar %}
+                        <ul class="list-unstyled fw-normal pb-1" style="font-size: 24pt;">
+                            <li><a class="button-cover" href="{% url 'index' %}">Поиск по ингредиентам</a></li>
+                            <li><a class="button-cover" href="{% url 'posts' %}">Блог</a></li>
+                            <li><a class="button-cover" href="{% url 'recipes' %}">Рецепты</a></li>
+                        </ul>
+                        <a class="button-cover" data-bs-toggle="collapse" href="#collapseCategories" aria-expanded="false"
+                            aria-controls="collapseCategories" style="font-size: 24pt;">Категории</a>
+                        <div class="collapse" id="collapseCategories">
+                            <ul class="list-unstyled fw-normal pb-1">
+                                {% if categories_base %}
+                                    {% for category in categories_base %}
+                                        <li>
+                                            <a href="{% url 'recipes-from-category' category.id %}"
+                                               style="text-decoration:none; font-size: 18pt; color: #673e37;">
+                                            {{ category.name }}</a></li>
+                                    {% endfor %}
+                                {% else %}
+                                    Нет категорий
+                                {% endif %}
+                            </ul>
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+            <nav class="navbar navbar-light">
+                <div class="container-fluid">
+                    <button class="navbar-toggler mx-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav"
+                        aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="navbar-toggler-icon"></i>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'recipes' %}">SiteName</a>
+                    <form class="d-flex" action="{% url 'recipes' %}" method="GET">
+                        <i class="fas fa-search"></i>
+                        <input name="q" class="btn-outline-warning shadow-none" type="search" placeholder="Салат цезарь..."
+                               aria-label="Search" width="100px" value='{{ request.GET.q }}'>
+                        <button class="btn btn-outline-warning text-dark bg-white" type="submit">Поиск</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
+        <div class="text-center">
+            {% if categories_base %}
+                {% for category in categories_base %}
+                    <a href="{% url 'recipes-from-category' category.id %}" style="text-decoration:none; color: gray;" class="col">{{ category.name }}</a>
+                {% endfor %}
+            {% else %}
+                Нет категорий
+            {% endif %}
+        </div>
+    </div>
+    <!-- конец шапки -->
+
+    {% block content %}
+    {% endblock %}
+
+<!--подвал-->
+<div class="row">
+    <div class="col g-5 p-3 center bg-white">
+        <div>Icons made by <a href="https://www.flaticon.com/authors/vectors-market" title="Vectors Market">Vectors Market</a> from
+                           <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+    </div>
+</div>
+<!--конец подвала-->
+</div>
+
+</body>
+</html>

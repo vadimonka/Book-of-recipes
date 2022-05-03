@@ -1,0 +1,43 @@
+{% extends "base_generic.html" %}
+<!--Шаблон страницы - Ингредиенты(Главная)-->
+{% block content %}
+<h1 class="pt-3 text-center">Ингредиенты</h1>
+
+<form action="{% url 'recipes' %}" method="GET" name="form_ingred">
+
+<div class="row shadow-sm">
+
+    {% for ingredient_category in ingredient_categories %}
+        <br><br><h3>{{ ingredient_category.name }}</h3>
+        <div class="row row-cols-2 row-cols-sm-2 row-cols-md-4">
+        {% with ingredient_category.ingredients.all as ingredients %}
+            {% if ingredients %}
+                {% for ingredient in ingredients %}
+                    <div class="col rounded-pill border ingred" id="{{ ingredient.name }}" onclick="Show({{ ingredient.name }})">
+                        {{ ingredient.name }} - <img src="/media/{{ ingredient.icon }}" class="icon" alt="{{ ingredient.name }}">
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Пусто</p>
+            {% endif %}
+        {% endwith %}
+        </div>
+    {% endfor %}
+
+    <div class="row">
+        <div class="col">
+            <input name="qi" type="text" id="hidden_query" value="{{ request.GET.qi }}" hidden>
+        </div>
+        <div class="col-6">
+            <button type="submit" style="height:50px; width:100%; font-size:20px; border-radius:5px; border:none; background-color: rgb(243, 207, 251);">Поиск
+            </button>
+        </div>
+        <div class="col"></div>
+    </div>
+
+</div>
+
+</form>
+
+
+{% endblock %}

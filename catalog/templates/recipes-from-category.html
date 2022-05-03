@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %}
+<!--Шаблон странциы - Список рецептов в категории-->
+{% block content %}
+<h1 class="pt-3 text-center">Рецепты</h1>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 shadow">
+
+    {% if categ %}
+        {% for recipe in categ.recipes_set.all %}
+        <div class="col pt-3 pb-4 px-3 rounded text-center">
+            <div class="card shadow border-0">
+                <a style="text-decoration:none;" class="text-dark" href="{{ recipe.get_absolute_url }}">
+                    {% load static %}
+                    <div style="overflow:hidden; height:225px; width:auto;">
+                        <img src="/media/{{ recipe.preview }}" class="card-img-top" alt="{{ recipe.name }}">
+                    </div>
+                    <div class="card-body" style="">
+                        <h5 class="card-title">{{ recipe.name }}</h5>
+                        <p class="card-text">{% for ingredient in recipe.ingredient.all %}{{ ingredient }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}</p>
+                        <div style="text-align:left; color:gray; font-size:11pt;">
+                            <svg width="14pt" height="14pt" viewBox="0 0 20 19" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+                            <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                            </svg> {{ recipe.total_views }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>В выбранной категории нет рецептов.</p>
+    {% endif %}
+</div>
+{% endblock %}

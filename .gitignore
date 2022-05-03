@@ -1,0 +1,4 @@
+db.sqlite3
+foo
+.idea
+secret_key.txt

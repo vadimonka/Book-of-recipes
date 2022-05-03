@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+<!--Шаблон страницы - Рецепт-->
+{% block content %}
+
+  <h1>{{ recipe.name }}</h1>
+
+  <p><strong>Ингредиенты</strong>
+    {% for ingredient in recipe.ingredient.all %} {{ ingredient }}{% if not forloop.last %}, {% endif %} {% endfor %}
+  </p>
+  <p><strong>Калорийность</strong> {{ recipe.calories }}</p>
+  <p><strong>Время приготовления</strong> {{ recipe.cooking_time }}</p>
+  <p><strong>Просмотров</strong> {{ recipe.total_views }}</p>
+  <div>
+    {% autoescape off %}
+      {{ recipe.summary }}
+    {% endautoescape %}
+
+  </div>
+
+
+{% endblock %}

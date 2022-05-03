@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %}
+<!--Шаблон страницы - Статьи блога-->
+{% block content %}
+<h1 class="pt-3 text-center">{{posts.title}}</h1>
+<div class="row shadow-sm">
+    <div class="col">
+        {{ posts.content }}
+    </div>
+</div>
+{% endblock %}

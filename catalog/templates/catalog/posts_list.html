@@ -1,0 +1,24 @@
+{% extends "base_generic.html" %}
+<!--Шаблон страницы - Список статей блога-->
+{% block content %}
+<h1 class="pt-3 text-center">Блог</h1>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 shadow-sm">
+
+    {% if posts_list %}
+        {% for post in posts_list %}
+        <div class="col pt-3 pb-4 px-3 rounded text-center">
+            <div class="card shadow border-0">
+                <div style="overflow:hidden; height:300px; width:auto;">
+                    <img src="/media/{{ post.preview }}" class="card-img-top" alt="{{ post.title }}">
+                </div>
+            <div class="card-body">
+                <h5 class="card-title"><a style="text-decoration:none;" class="text-dark" href="{{ post.get_absolute_url }}">{{ post.title }}</a></h5>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p>Нет постов.</p>
+    {% endif %}
+</div>
+{% endblock %}

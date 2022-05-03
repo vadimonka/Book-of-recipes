@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.img1 {
+    width: auto;
+    height: 200px;
+    overflow: hidden;
+    outline: 1px solid #CCCCCC;
+}
+.img1 img {
+    margin: 0;
+    padding: 0;
+}
+
+.ingred {
+    cursor: pointer;
+}
+.ingred_down {
+    background-color: #BDBDBD;
+}
+
+.button-cover {
+    color: black;
+    outline: none;
+    text-decoration: none;
+}
+.button-cover:hover {
+    color: #673e37;
+}
+.button-cover:focus {
+    text-decoration: underline solid black;
+}

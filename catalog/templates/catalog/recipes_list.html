@@ -1,0 +1,46 @@
+{% extends "base_generic.html" %}
+<!--Шаблон странциы - Список рецептов-->
+{% block content %}
+<h1 class="pt-3 text-center">Рецепты</h1>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 px-2">
+
+    {% if recipes_list %}
+        {% for recipe in recipes_list %}
+        <div class="col pb-4 text-center">
+            <div class="card border-0" style="background: #F9F9FF; box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);">
+                <a style="text-decoration:none;" class="text-dark" href="{{ recipe.get_absolute_url }}">
+                    {% load static %}
+                    <img src="/media/{{ recipe.preview }}" class="card-img-top" style="object-fit: cover; height: 150px;" alt="{{ recipe.name }}">
+                    <div class="card-body" style="height: 75px;">
+                        <h4 class="card-title text-truncate" style="font-size:16pt;">{{ recipe.name }}</h4>
+                        <p class="card-text text-truncate" style="color: #7c7b89; font-size:12pt;">
+                            {% for ingredient in recipe.ingredient.all %}{{ ingredient }}
+                                {% if not forloop.last %},
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                    </div>
+                    <div class="card-body" style="font-size:10pt;">
+                        <span class="rounded-pill" style="color: #673e37; background: #f1e4de; float: left; padding: 0 5px 0 5px;">
+                            {{ recipe.cooking_time }}
+                        </span>
+                        <span class="rounded-pill" style="color: #673e37; background: #f1e4de; float: left; padding: 0 5px 0 5px;">
+                            {{ recipe.calories }} ккал
+                        </span>
+                        <div style="color: #d57056; text-align:right;">{{ recipe.total_views }}
+                        <svg width="12pt" height="12pt" viewBox="0 0 20 19" class="bi bi-eye" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z"/>
+                        <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
+                        </svg></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        {% endfor %}
+    {% else %}
+        <p>Нет рецептов.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
